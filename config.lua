@@ -56,10 +56,26 @@ lvim.plugins = {
     cmd = { "MarkmapOpen", "MarkmapSave", "MarkmapWatch", "MarkmapWatchStop" },
     opts = {
       html_output = "/tmp/markmap.html", -- (default) Setting a empty string "" here means: [Current buffer path].html
-      hide_toolbar = false,            -- (default)
-      grace_period = 3600000           -- (default) Stops markmap watch after 60 minutes. Set it to 0 to disable the grace_period.
+      hide_toolbar = false,              -- (default)
+      grace_period = 3600000             -- (default) Stops markmap watch after 60 minutes. Set it to 0 to disable the grace_period.
     },
     config = function(_, opts) require("markmap").setup(opts) end
+  },
+  {
+    "nvim-neo-tree/neo-tree.nvim",
+    version = "3.10",
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      "nvim-tree/nvim-web-devicons",
+      "MunifTanjim/nui.nvim",
+    },
+    config = function()
+      require("local/neo-tree").setup()
+    end
+  },
+  {
+    "sindrets/diffview.nvim",
+    event = "BufRead",
   }
 }
 
@@ -74,6 +90,19 @@ lvim.builtin.treesitter.incremental_selection = {
     scope_incremental = "<Tab>",
     node_decremental = "<S-Tab>",
   },
+}
+
+lvim.builtin.nvimtree.active = false -- NOTE: using neo-tree
+lvim.builtin.which_key.mappings["e"] = {
+  "<cmd>Neotree<cr>", "Explorer"
+}
+lvim.builtin.bufferline.options.offsets = {
+  {
+    filetype = "neo-tree",
+    text = "File Explorer",
+    highlight = "Directory",
+    separator = true
+  }
 }
 
 require("lvim.lsp.manager").setup("marksman")
