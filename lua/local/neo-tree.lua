@@ -23,8 +23,9 @@ local options = {
       ["<2-LeftMouse>"] = "open",
       ["<cr>"] = "open",
       ["o"] = "open",
+      ["h"] = "close_node",
+      ["l"] = "toggle_node",
       ["P"] = { "toggle_preview", config = { use_float = true } },
-      ["l"] = "focus_preview",
       ["R"] = "refresh",
       ["a"] = {
         "add",
