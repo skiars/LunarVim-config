@@ -70,7 +70,7 @@ lvim.plugins = {
       "MunifTanjim/nui.nvim",
     },
     config = function()
-      require("local/neo-tree").setup()
+      require("local.neo-tree").setup()
     end
   },
   {
@@ -99,7 +99,7 @@ lvim.builtin.which_key.mappings["e"] = {
 lvim.builtin.bufferline.options.offsets = {
   {
     filetype = "neo-tree",
-    text = "File Explorer",
+    text = "Explorer",
     highlight = "Directory",
     separator = true
   }
