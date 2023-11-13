@@ -105,7 +105,6 @@ lvim.builtin.bufferline.options.offsets = {
   }
 }
 
-require("lvim.lsp.manager").setup("marksman")
 lvim.builtin.which_key.mappings["f"] = {
   "<cmd>Telescope find_files hidden=true<cr>",
   "Find File"
@@ -151,3 +150,6 @@ lvim.builtin.which_key.mappings["t"] = {
   s = { "<cmd>lua require('local.term-select').show()<cr>", "Select Terminal" },
   n = { "<cmd>lua require('local.term-select').new()<cr>", "New Session" }
 }
+
+require("lvim.lsp.manager").setup("pylsp")
+require("lvim.lsp.manager").setup("marksman")
