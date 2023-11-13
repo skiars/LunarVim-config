@@ -125,3 +125,13 @@ lvim.autocommands = {
     }
   }
 }
+
+-- toggleterm
+lvim.builtin.terminal.winbar = { enabled = true }
+lvim.keys.term_mode["<C-x>"] = "<cmd>lua require('local.term-select').prev()<cr>"
+lvim.builtin.which_key.mappings["t"] = {
+  name = "Terminal",
+  t = { "<cmd>ToggleTerm<cr>", "Toggle Terminal" },
+  s = { "<cmd>lua require('local.term-select').show()<cr>", "Select Terminal" },
+  n = { "<cmd>lua require('local.term-select').new()<cr>", "New Session" }
+}
