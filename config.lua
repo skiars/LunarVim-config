@@ -106,6 +106,22 @@ lvim.builtin.bufferline.options.offsets = {
 }
 
 require("lvim.lsp.manager").setup("marksman")
+lvim.builtin.which_key.mappings["f"] = {
+  "<cmd>Telescope find_files hidden=true<cr>",
+  "Find File"
+}
+lvim.builtin.which_key.mappings["st"] = {
+  function()
+    require("telescope.builtin").live_grep {
+      additional_args = function(args)
+        return vim.list_extend(args, {
+          "--hidden"
+        })
+      end,
+    }
+  end,
+  "Text in files",
+}
 
 lvim.autocommands = {
   {
