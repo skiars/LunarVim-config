@@ -76,7 +76,31 @@ lvim.plugins = {
   {
     "sindrets/diffview.nvim",
     event = "BufRead",
-  }
+  },
+  { "nvim-lua/popup.nvim" },
+  { "nvim-lua/plenary.nvim" },
+  {
+    "nvim-telescope/telescope.nvim",
+    config = function()
+      require('telescope').load_extension('media_files')
+    end
+  },
+  { "nvim-lua/plenary.nvim" },
+  { "m00qek/baleia.nvim" },
+  {
+    "skiars/chafa.nvim",
+    config = function()
+      require("chafa").setup({
+        render = {
+          min_padding = 5,
+          show_label = true,
+        },
+        events = {
+          update_on_nvim_resize = true,
+        },
+      })
+    end
+  },
 }
 
 table.insert(lvim.builtin.alpha.dashboard.section.buttons.entries, 6,
@@ -106,8 +130,12 @@ lvim.builtin.bufferline.options.offsets = {
 }
 
 lvim.builtin.which_key.mappings["f"] = {
-  "<cmd>Telescope find_files hidden=true<cr>",
+  "<cmd>Telescope find_files idden=true<cr>",
   "Find File"
+}
+lvim.builtin.which_key.mappings["sm"] = {
+  "<cmd>Telescope media_files hidden=true<cr>",
+  "Media File"
 }
 lvim.builtin.which_key.mappings["st"] = {
   function()
