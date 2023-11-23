@@ -1,6 +1,5 @@
 local terminal = require("toggleterm.terminal")
 local M = {}
-local win_id = -1
 
 local function show_term(term)
   if term then
