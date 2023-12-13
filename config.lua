@@ -3,6 +3,12 @@
 -- Forum: https://www.reddit.com/r/lunarvim/
 -- Discord: https://discord.com/invite/Xb9B4Ny
 
+local local_config = {}
+
+pcall(function()
+  local_config = require("local-config")
+end)
+
 lvim.keys.normal_mode["<C-s>"] = ":w<CR>"
 lvim.keys.normal_mode["\\"] = ":vsplit<CR>"
 lvim.keys.normal_mode["-"] = ":split<CR>"
@@ -17,7 +23,7 @@ lvim.keys.term_mode["<C-l>"] = false
 
 vim.opt.wrap = true
 
--- 仅用于 Windows 的配置
+-- Windows only config
 if jit.os == 'Windows' then
   lvim.builtin.terminal.shell = "pwsh -nologo"
 end
@@ -44,7 +50,7 @@ lvim.plugins = {
   {
     "keaising/im-select.nvim",
     config = function()
-      if jit.os == 'Linux' then
+      if local_config.im_select and jit.os == 'Linux' then
         require("im_select").setup({})
       end
     end
@@ -180,5 +186,10 @@ lvim.builtin.which_key.mappings["t"] = {
   n = { "<cmd>lua require('local.term-select').new()<cr>", "New Session" }
 }
 
-require("lvim.lsp.manager").setup("pylsp")
-require("lvim.lsp.manager").setup("marksman")
+for _, name in ipairs(local_config.lsp_preset or {}) do
+  require("lvim.lsp.manager").setup(name)
+end
+
+if local_config.config then
+  local_config.config()
+end
