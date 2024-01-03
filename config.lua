@@ -162,7 +162,14 @@ lvim.autocommands = {
     {
       group = "lvim_user",
       pattern = "*.md",
-      command = "set shiftwidth=2"
+      -- set 2 spaces indent width, word wrap
+      -- C-b to bold selected text (VISUAL mode)
+      command = [[
+        set shiftwidth=2
+        set wrap
+        set linebreak
+        vnoremap <C-b> :s/\%V.*\%V/\= '**' . submatch(0) . '**'/<cr>:noh<cr>
+      ]]
     }
   },
   {
