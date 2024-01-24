@@ -50,7 +50,7 @@ lvim.plugins = {
   {
     "keaising/im-select.nvim",
     config = function()
-      if local_config.im_select and jit.os == 'Linux' then
+      if local_config.im_select then
         require("im_select").setup({})
       end
     end
