@@ -179,6 +179,18 @@ lvim.autocommands = {
       pattern = "*.ux",
       command = "set filetype=html"
     }
+  },
+  {
+    { "BufEnter", "BufWinEnter" },
+    {
+      group = "lvim_user",
+      pattern = "*.ins",
+      command = [[
+        set filetype=ins
+        inoremap <C-b> <lt>ins><lt>/ins><C-o>5h
+        inoremap <C-z> <lt>s><cr><cr><lt>/s><C-o>4h
+      ]]
+    }
   }
 }
 
