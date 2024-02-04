@@ -15,6 +15,7 @@ lvim.keys.normal_mode["-"] = ":split<CR>"
 lvim.keys.normal_mode["<S-x>"] = ":BufferKill<CR>"
 lvim.keys.normal_mode["<S-h>"] = ":bprev<CR>"
 lvim.keys.normal_mode["<S-l>"] = ":bnext<CR>"
+lvim.keys.normal_mode["<C-p>"] = "\"_dP"
 -- 在 lazygit 中禁用按键绑定避免冲突
 lvim.keys.term_mode["<C-h>"] = false
 lvim.keys.term_mode["<C-j>"] = false
@@ -155,6 +156,8 @@ lvim.builtin.which_key.mappings["st"] = {
   end,
   "Text in files",
 }
+lvim.builtin.which_key.mappings["P"] = lvim.builtin.which_key.mappings["p"]
+lvim.builtin.which_key.mappings["p"] = { "\"_dP", "Paste without yank" }
 
 lvim.autocommands = {
   {
