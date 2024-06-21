@@ -70,7 +70,7 @@ lvim.plugins = {
   },
   {
     "nvim-neo-tree/neo-tree.nvim",
-    version = "3.10",
+    version = "3.25",
     dependencies = {
       "nvim-lua/plenary.nvim",
       "nvim-tree/nvim-web-devicons",
@@ -208,8 +208,12 @@ lvim.builtin.which_key.mappings["t"] = {
   n = { "<cmd>lua require('local.term-select').new()<cr>", "New Session" }
 }
 
-for _, name in ipairs(local_config.lsp_preset or {}) do
-  require("lvim.lsp.manager").setup(name)
+for _, cfg in ipairs(local_config.lsp_preset or {}) do
+  if type(cfg) == 'string' then
+    require("lvim.lsp.manager").setup(cfg)
+  else
+    require("lvim.lsp.manager").setup(cfg[1], cfg[2])
+  end
 end
 
 if local_config.config then
