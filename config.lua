@@ -116,6 +116,18 @@ lvim.plugins = {
       })
     end
   },
+  -- must install prettier binary via system package manager
+  { "MunifTanjim/prettier.nvim" },
+
+-- formatting config
+local formatters = require "lvim.lsp.null-ls.formatters"
+formatters.setup {
+  {
+    name = "prettier",
+    -- args = { "--print-width", "100" },
+    ---@usage only start in these filetypes, by default it will attach to all filetypes it supports
+    filetypes = { "markdown" },
+  },
 }
 
 table.insert(lvim.builtin.alpha.dashboard.section.buttons.entries, 6,
