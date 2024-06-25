@@ -37,6 +37,14 @@ vim.wo.foldminlines = 1
 vim.wo.foldlevel = 1
 vim.opt.foldenable = false -- 不自动折叠
 
+-- neovide configuration
+if vim.g.neovide then
+  lvim.keys.insert_mode["<S-Insert>"] = '<esc>l"+Pli'
+  vim.o.guifont = "IosevkaExt Nerd Font,Noto Sans CJK SC:h10"
+  vim.g.neovide_scroll_animation_length = 0.2
+  vim.g.neovide_cursor_animation_length = 0
+end
+
 lvim.plugins = {
   {
     "folke/persistence.nvim",
