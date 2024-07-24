@@ -47,14 +47,20 @@ end
 
 lvim.plugins = {
   {
-    "folke/persistence.nvim",
-    event = "BufReadPre", -- this will only start session saving when an actual file was opened
+    "olimorris/persisted.nvim",
+    lazy = false, -- make sure the plugin is always loaded at startup
     config = function()
-      require("persistence").setup {
-        dir = vim.fn.expand(vim.fn.stdpath "config" .. "/session/"),
-        options = { "buffers", "curdir", "tabpages", "winsize" },
-      }
-    end,
+      require("persisted").setup {}
+      require("telescope").load_extension("persisted")
+      local group = vim.api.nvim_create_augroup("PersistedHooks", {})
+      vim.api.nvim_create_autocmd({ "User" }, {
+        pattern = "PersistedSavePre",
+        group = group,
+        callback = function(session)
+          vim.cmd "Neotree close"
+        end,
+      })
+    end
   },
   {
     "keaising/im-select.nvim",
@@ -118,6 +124,7 @@ lvim.plugins = {
   },
   -- must install prettier binary via system package manager
   { "MunifTanjim/prettier.nvim" },
+}
 
 -- formatting config
 local formatters = require "lvim.lsp.null-ls.formatters"
@@ -131,7 +138,7 @@ formatters.setup {
 }
 
 table.insert(lvim.builtin.alpha.dashboard.section.buttons.entries, 6,
-  { "s", "󰁯  Open Last Session", "<cmd>lua require('persistence').load()<cr>" })
+  { "s", "󰁯  Open Last Session", "<cmd>SessionLoad<cr>" })
 
 lvim.builtin.treesitter.incremental_selection = {
   enable = true,
