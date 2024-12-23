@@ -16,6 +16,7 @@ lvim.keys.normal_mode["<S-x>"] = ":BufferKill<CR>"
 lvim.keys.normal_mode["<S-h>"] = ":bprev<CR>"
 lvim.keys.normal_mode["<S-l>"] = ":bnext<CR>"
 lvim.keys.normal_mode["<C-p>"] = "\"_dP"
+lvim.keys.normal_mode["<S-q>"] = "<cmd>lua vim.diagnostic.open_float()<cr>"
 -- 在 lazygit 中禁用按键绑定避免冲突
 lvim.keys.term_mode["<C-h>"] = false
 lvim.keys.term_mode["<C-j>"] = false
@@ -124,6 +125,39 @@ lvim.plugins = {
   },
   -- must install prettier binary via system package manager
   { "MunifTanjim/prettier.nvim" },
+  {
+    "voldikss/vim-translator",
+    config = function()
+      vim.g.translator_target_lang = 'en'
+      vim.g.translator_window_borderchars = { '─', '│', '─', '│', '╭', '╮', '╯', '╰' }
+      vim.g.translator_proxy_url = 'http://127.0.0.1:7890'
+    end
+  },
+  {
+    "fei6409/log-highlight.nvim",
+    config = function()
+      require("log-highlight").setup {}
+    end
+  },
+  {
+    "f-person/git-blame.nvim",
+    event = "BufRead",
+    config = function()
+      -- 将 blame 的背景色设置为光标行的背景色
+      local hl_cursor_line = vim.api.nvim_get_hl(0, { name = "CursorLine" })
+      local hl_comment = vim.api.nvim_get_hl(0, { name = "Comment" })
+      local hl_combined = vim.tbl_extend("force", hl_comment, { bg = hl_cursor_line.bg })
+      vim.api.nvim_set_hl(0, "CursorLineBlame", hl_combined)
+      require('gitblame').setup {
+        enabled = true,
+        message_template = " <author> • <date> • <summary>", -- template for the blame message, check the Message template section for more options
+        date_format = "%Y-%m-%d %H:%M:%S", -- template for the date, check Date format section for more options
+        virtual_text_column = 1,
+        highlight_group = "CursorLineBlame",
+      }
+      -- vim.cmd "highlight default link gitblame SpecialComment"
+    end,
+  },
 }
 
 -- formatting config
@@ -233,6 +267,9 @@ lvim.builtin.which_key.mappings["t"] = {
   t = { "<cmd>ToggleTerm<cr>", "Toggle Terminal" },
   s = { "<cmd>lua require('local.term-select').show()<cr>", "Select Terminal" },
   n = { "<cmd>lua require('local.term-select').new()<cr>", "New Session" }
+}
+lvim.builtin.which_key.mappings["l"]["K"] = {
+  "<cmd>lua vim.diagnostic.open_float()<cr>", "Show Diagnostic"
 }
 
 for _, cfg in ipairs(local_config.lsp_preset or {}) do
